@@ -58,3 +58,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Redis](https://redis.io/) - In-memory data structure store
 - [Docker](https://www.docker.com/) - Containerization platform
 - [Vagrant](https://www.vagrantup.com/) - Development environment automation
+
+
