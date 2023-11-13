@@ -1,23 +1,24 @@
 Vagrant.configure("2") do |config|
-  # Use the official Ubuntu 20.04 box
-  config.vm.box = "ubuntu/focal64"
+  # Set up a Ubuntu 20.04 box
+  config.vm.box = "ubuntu/bionic64"
 
-  # Forward port 8080 on the guest to port 8080 on the host
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  # Forward ports
+  config.vm.network "forwarded_port", guest: 8081, host: 8081
 
-  # Configure the virtual machine provider (VirtualBox in this case)
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "1024"
-  end
+  # Install Docker and Docker Compose
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get install -y docker.io docker-compose
+    sudo usermod -aG docker vagrant
+    sudo systemctl enable --now docker
+  SHELL
 
-  # Provision Docker on the virtual machine
-  config.vm.provision "docker" do |d|
-    d.pull_images("nginx:latest")
+  # Share the 'app' directory with the VM
+  config.vm.synced_folder "app", "/vagrant/app"
 
-    # Run a simple Nginx container
-    d.run "nginx_container",
-      image: "nginx:latest",
-      args: "-p 8080:80",
-      auto_assign_name: true
-  end
+  # Provision the Docker containers
+  config.vm.provision "shell", inline: <<-SHELL
+    cd /vagrant
+    docker-compose up -d
+  SHELL
 end
