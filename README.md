@@ -59,7 +59,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Docker](https://www.docker.com/) - Containerization platform
 - [Vagrant](https://www.vagrantup.com/) - Development environment automation
 
-''' 
+```
 node-redis-docker-cache-example/
 │
 ├── app/
@@ -71,4 +71,4 @@ node-redis-docker-cache-example/
 ├── README.md
 ├── Vagrantfile
 ├── LICENSE
-'''
+```
